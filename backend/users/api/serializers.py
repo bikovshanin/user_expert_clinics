@@ -77,10 +77,16 @@ class WebUserSerializer(UserCreateSerializer):
             'passport_number',
             'place_of_birth',
             'phone_number',
-            'registration_address'
+            'registration_address',
         )
+
+        errors = {}
         for field in required_fields:
             if not data.get(field):
-                raise serializers.ValidationError(
-                    f"{field.replace('_', ' ').title()} is required.")
+                errors[
+                    field] = f"{field.replace('_', ' ').title()} is required."
+
+        if errors:
+            raise serializers.ValidationError(errors)
+
         return data

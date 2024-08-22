@@ -118,6 +118,13 @@ class User(AbstractUser):
             self.email = None
         if self.phone_number == '':
             self.phone_number = None
+        elif self.phone_number:
+            # Преобразование объекта PhoneNumber в строку для проверки
+            phone_number_str = str(self.phone_number)
+            if phone_number_str.startswith('8'):
+                # Заменяем '8' на '+7' в начале номера телефона
+                phone_number_str = '+7' + phone_number_str[1:]
+                self.phone_number = phone_number_str
         super().save(*args, **kwargs)
 
     def __repr__(self):

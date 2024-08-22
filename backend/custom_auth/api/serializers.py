@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from users.models import User
@@ -25,7 +26,7 @@ class CustomTokenSerializer(serializers.Serializer):
             try:
                 user = User.objects.get(email=email)
             except User.DoesNotExist:
-                raise serializers.ValidationError(
+                raise AuthenticationFailed(
                     'No user with this email found.'
                 )
 
@@ -33,15 +34,15 @@ class CustomTokenSerializer(serializers.Serializer):
             try:
                 user = User.objects.get(phone_number=phone_number)
             except User.DoesNotExist:
-                raise serializers.ValidationError(
+                raise AuthenticationFailed(
                     'No user with this phone number found.'
                 )
 
         if user and not user.check_password(password):
-            raise serializers.ValidationError('Incorrect password.')
+            raise AuthenticationFailed('Incorrect password.')
 
         if user is None:
-            raise serializers.ValidationError('Invalid credentials.')
+            raise AuthenticationFailed('Invalid credentials.')
 
         refresh = RefreshToken.for_user(user)
         return {
