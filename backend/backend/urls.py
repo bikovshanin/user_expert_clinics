@@ -1,9 +1,9 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include, path
 from django.views.generic import TemplateView
 
-from users.api.urls import users_urlpatterns
 from custom_auth.api.urls import auth_urlpatterns
+from users.api.urls import users_urlpatterns
 
 v1_urls = [
     path('users/', include((users_urlpatterns, 'users'))),

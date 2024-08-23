@@ -1,13 +1,20 @@
 from django.contrib import admin
-from django_json_widget.widgets import JSONEditorWidget
 from django.db import models
+from django_json_widget.widgets import JSONEditorWidget
 
-from users.forms import AdminUserCreationForm, AdminCustomUserChangeForm
+from users.forms import AdminCustomUserChangeForm, AdminUserCreationForm
 from users.models import User
 
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
+    """
+    Кастомная админская конфигурация для модели пользователя (User).
+
+    Определяет, как модель пользователя будет отображаться и управляться в
+    админ-панели Django.
+
+    """
     add_form = AdminUserCreationForm
     form = AdminCustomUserChangeForm
 

@@ -1,7 +1,6 @@
-from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
-
 from phonenumber_field.modelfields import PhoneNumberField
 
 from backend.settings import MAX_NAME_LENGTH
@@ -9,7 +8,13 @@ from backend.settings import MAX_NAME_LENGTH
 
 class CustomUserManager(BaseUserManager):
     """
-    Custom manager for user model.
+    Кастомный менеджер для модели пользователя.
+
+    Методы:
+        _create_user: Создает и сохраняет пользователя с указанным email
+        или номером телефона и паролем.
+        create_user: Создает обычного пользователя.
+        create_superuser: Создает суперпользователя.
     """
 
     def _create_user(self, email=None, phone_number=None, password=None,
@@ -40,6 +45,22 @@ class CustomUserManager(BaseUserManager):
 
 
 class User(AbstractUser):
+    """
+    Кастомная модель пользователя, наследующаяся от AbstractUser.
+
+    Атрибуты:
+        email (EmailField): Электронная почта пользователя.
+        first_name (CharField): Имя пользователя.
+        middle_name (CharField): Отчество пользователя.
+        last_name (CharField): Фамилия пользователя.
+        date_of_birth (DateField): Дата рождения пользователя.
+        passport_number (CharField): Номер паспорта пользователя.
+        place_of_birth (CharField): Место рождения пользователя.
+        phone_number (PhoneNumberField): Номер телефона пользователя.
+        registration_address (TextField): Адрес регистрации пользователя.
+        residence_address (TextField): Адрес проживания пользователя.
+    """
+
     username = None
     email = models.EmailField(
         'email',

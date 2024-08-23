@@ -6,6 +6,17 @@ from users.models import User
 
 
 class CustomTokenSerializer(serializers.Serializer):
+    """
+    Сериализатор для создания JWT-токенов на основе email или номера телефона.
+
+    Атрибуты:
+        email (EmailField): Поле для email пользователя, опционально.
+        phone_number (CharField): Поле для номера телефона пользователя,
+        опционально.
+        password (CharField): Поле для пароля пользователя, используется
+        только для записи.
+    """
+
     email = serializers.EmailField(required=False)
     phone_number = serializers.CharField(required=False)
     password = serializers.CharField(write_only=True)

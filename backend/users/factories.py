@@ -1,10 +1,17 @@
 from django.contrib.auth.hashers import make_password
-from factory import django, Faker
+from factory import Faker, django
 
 from users.models import User
 
 
 class UserAdminFactory(django.DjangoModelFactory):
+    """
+    Фабрика для создания объектов модели User с правами администратора.
+
+    Используется для генерации тестовых данных, представляющих
+    пользователя-администратора.
+
+    """
     class Meta:
         model = User
 
@@ -19,6 +26,12 @@ class UserAdminFactory(django.DjangoModelFactory):
 
 
 class UserFactory(django.DjangoModelFactory):
+    """
+    Фабрика для создания объектов модели User.
+
+    Используется для генерации тестовых данных для обычных пользователей.
+
+    """
     class Meta:
         model = User
 

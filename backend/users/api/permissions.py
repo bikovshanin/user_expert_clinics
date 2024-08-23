@@ -1,10 +1,12 @@
-from rest_framework.permissions import BasePermission, SAFE_METHODS
+from rest_framework.permissions import SAFE_METHODS, BasePermission
 
 
 class IsAuthenticatedOwnerOrAdmin(BasePermission):
     """
-    Custom permission to check if the user is authenticated
-    and either the owner of the object or an admin.
+    Кастомное разрешение, позволяющее доступ только аутентифицированным
+    пользователям,
+    которые являются владельцами объекта или администраторами.
+
     """
 
     def has_permission(self, request, view):

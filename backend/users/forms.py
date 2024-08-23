@@ -4,6 +4,13 @@ from users.models import User
 
 
 class BaseAdminForm(forms.ModelForm):
+    """
+    Базовая форма администратора для модели `User`.
+
+    Используется для представления и валидации базовых полей модели
+    пользователя в админ-панели.
+
+    """
     class Meta:
         model = User
         fields = ('date_of_birth', 'passport_number', 'phone_number')
@@ -15,7 +22,13 @@ class BaseAdminForm(forms.ModelForm):
 
 
 class AdminUserCreationForm(BaseAdminForm):
-    """Форма для создания пароля и других данных"""
+    """
+    Форма для создания нового пользователя в админ-панели.
+
+    Наследуется от `BaseAdminForm` и добавляет поля для ввода и
+    подтверждения пароля.
+
+    """
 
     password1 = forms.CharField(
         label='Пароль',
@@ -42,7 +55,13 @@ class AdminUserCreationForm(BaseAdminForm):
 
 
 class AdminCustomUserChangeForm(BaseAdminForm):
-    """Форма для изменения пароля и других данных"""
+    """
+    Форма для изменения существующего пользователя в админ-панели.
+
+    Наследуется от `BaseAdminForm` и добавляет поле для изменения пароля.
+
+    """
+
     password = forms.CharField(
         label='Пароль',
         widget=forms.PasswordInput,

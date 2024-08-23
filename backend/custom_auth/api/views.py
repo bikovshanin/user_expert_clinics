@@ -1,16 +1,21 @@
-from users.models import User
-from rest_framework import generics
+from rest_framework import generics, serializers, status
 from rest_framework.permissions import AllowAny
-from users.api.serializers import MailUserSerializer, MobileUserSerializer, \
-    WebUserSerializer
-from rest_framework import serializers
-
 from rest_framework.response import Response
-from rest_framework import status
+
 from custom_auth.api.serializers import CustomTokenSerializer
+from users.api.serializers import (MailUserSerializer, MobileUserSerializer,
+                                   WebUserSerializer)
+from users.models import User
 
 
 class CustomTokenView(generics.CreateAPIView):
+    """
+    Представление для создания JWT-токенов.
+
+    Методы:
+        create: Создает и возвращает JWT-токены.
+    """
+
     serializer_class = CustomTokenSerializer
     permission_classes = (AllowAny,)
 
@@ -21,6 +26,14 @@ class CustomTokenView(generics.CreateAPIView):
 
 
 class RegisterView(generics.CreateAPIView):
+    """
+    Представление для регистрации нового пользователя.
+
+    Методы:
+        get_serializer_class: Определяет сериализатор в зависимости от
+        заголовка 'x-Device'.
+    """
+
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
 

@@ -7,6 +7,10 @@ from users.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор для модели пользователя.
+
+    """
     password = serializers.CharField(write_only=True, required=False)
 
     class Meta:
@@ -28,6 +32,16 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserCreateSerializer(UserSerializer):
+    """
+    Сериализатор для создания нового пользователя.
+
+    Методы:
+        create: Создает нового пользователя.
+        validate_passport_number: Проверяет корректность номера паспорта.
+        validate_email: Проверяет наличие пользователя с указанным email.
+        validate_phone_number: Проверяет наличие пользователя с указанным
+        номером телефона.
+    """
     password = serializers.CharField(write_only=True, required=True)
 
     def create(self, validated_data):
@@ -58,16 +72,35 @@ class UserCreateSerializer(UserSerializer):
 
 
 class MailUserSerializer(UserCreateSerializer):
+    """
+    Сериализатор для создания пользователя с обязательным email и именем.
+
+    Атрибуты:
+        first_name (CharField): Обязательное поле для имени.
+        email (EmailField): Обязательное поле для email.
+    """
     first_name = serializers.CharField(required=True)
     email = serializers.EmailField(required=True)
 
 
 class MobileUserSerializer(UserCreateSerializer):
+    """
+    Сериализатор для создания пользователя с обязательным номером телефона.
+
+    Атрибуты:
+        phone_number (CharField): Обязательное поле для номера телефона.
+    """
     phone_number = serializers.CharField(required=True)
 
 
 class WebUserSerializer(UserCreateSerializer):
+    """
+    Сериализатор для создания пользователя через веб-интерфейс с проверкой
+    обязательных полей.
 
+    Методы:
+        validate: Проверяет наличие всех обязательных полей.
+    """
     def validate(self, data):
         required_fields = (
             'last_name',

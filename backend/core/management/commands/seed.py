@@ -3,13 +3,20 @@ import logging
 from django.core.management.base import BaseCommand
 from django.db.models import Model
 
-from users.factories import UserFactory, UserAdminFactory
+from users.factories import UserAdminFactory, UserFactory
 from users.models import User
 
 logger = logging.getLogger()
 
 
 class Command(BaseCommand):
+    """
+    Команда Django для генерации тестовых данных.
+
+    Использует фабрики для создания тестовых пользователей в базе данных.
+    Удаляет все объекты указанных моделей перед генерацией новых данных.
+
+    """
     help = 'Test data generation'
 
     FACTORIES = {
